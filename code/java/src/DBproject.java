@@ -296,7 +296,27 @@ public class DBproject{
 	}//end readChoice
 
 	public static void AddShip(DBproject esql) {//1
+	try{
+		System.out.print("\tEnter Ship ID:");
+		String input_ID = in.readLine();
+		System.out.print("\tEnter Make:");
+		String input_make = in.readLine();
+		System.out.print("\tEnter Model:");
+		String input_model = in.readLine();
+		System.out.print("\tEnter Age of Ship:");
+		String input_age = in.readLine();
+		System.out.print("\tEnter Number of Seats on the Ship:");
+		String input_seats = in.readLine();
+		String query = "INSERT INTO Ship (id, make, model, age, seats) VALUES (" + input_ID + ", " + input_make + ", " + input_model + ", " + input_age + ", " + input_seats + ")";
+
+		esql.executeQuery(query);
+		System.out.println("Added Ship");
+		}
+	catch(Exception e){
+		System.err.println(e.getMessage());
+		}	
 	}
+
 
 	public static void AddCaptain(DBproject esql) {//2
 	}
