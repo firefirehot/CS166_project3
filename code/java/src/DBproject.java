@@ -214,7 +214,7 @@ public class DBproject{
 	public static void main (String[] args) {
 		if (args.length != 3) {
 			System.err.println (
-				"Usage: " + "java [-classpath <classpath>] " + DBproject.class.getName () +
+				"Usage: " + "java [-classpath <classpath>] " + DBproject.class.getName() +
 		            " <dbname> <port> <user>");
 			return;
 		}//end if
@@ -297,19 +297,19 @@ public class DBproject{
 
 	public static void AddShip(DBproject esql) {//1
 	try{
-		System.out.print("\tEnter Ship ID:");
+		System.out.print("\tEnter Ship ID: ");
 		String input_ID = in.readLine();
-		System.out.print("\tEnter Make:");
+		System.out.print("\tEnter Make: ");
 		String input_make = in.readLine();
-		System.out.print("\tEnter Model:");
+		System.out.print("\tEnter Model: ");
 		String input_model = in.readLine();
-		System.out.print("\tEnter Age of Ship:");
+		System.out.print("\tEnter Age of Ship: ");
 		String input_age = in.readLine();
-		System.out.print("\tEnter Number of Seats on the Ship:");
+		System.out.print("\tEnter Number of Seats on the Ship: ");
 		String input_seats = in.readLine();
-		String query = "INSERT INTO Ship (id, make, model, age, seats) VALUES (" + input_ID + ", " + input_make + ", " + input_model + ", " + input_age + ", " + input_seats + ")";
-
-		esql.executeQuery(query);
+		String query = "INSERT INTO Ship (id, make, model, age, seats) VALUES (" + input_ID + ", '" + input_make + "', '" + input_model + "', " + input_age + ", " + input_seats + ")";
+		
+		esql.executeUpdate(query);
 		System.out.println("Added Ship");
 		}
 	catch(Exception e){
