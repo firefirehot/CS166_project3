@@ -323,10 +323,13 @@ public class DBproject{
 		//String input_ID = in.readLine();
 		System.out.print("\tEnter Make: ");
 		String input_make = in.readLine();
+		if(input_make.length() > 32){throw new Exception("\tName too long.");}
 		System.out.print("\tEnter Model: ");
 		String input_model = in.readLine();
+		if(input_model.length() > 64){throw new Exception("\tName too long.");}
 		System.out.print("\tEnter Age of Ship: ");
 		String input_age = in.readLine();
+		if(Integer.parseInt(input_age) < 0){throw new Exception("\tNegative values not accepted.");}
 		System.out.print("\tEnter Number of Seats on the Ship: ");
 		String input_seats = in.readLine();
 		//String query = "INSERT INTO Ship (id, make, model, age, seats) VALUES (" + input_ID + ", '" + input_make + "', '" + input_model + "', " + input_age + ", " + input_seats + ")";
@@ -346,8 +349,10 @@ public class DBproject{
                 //String input_ID = in.readLine();
                 System.out.print("\tEnter the Full Name of the Captain: ");
                 String input_fullname = in.readLine();
+		if(input_fullname.length() > 128){throw new Exception("\tName too long.");}
                 System.out.print("\tEnter the Nationality of the Captain: ");
                 String input_nationality = in.readLine();
+		if(input_nationality.length() > 24){throw new Exception("\tName too long.");}
                 //String query = "INSERT INTO Captain(id, fullname, nationality) VALUES (" + input_ID + ", '" + input_fullname + "', '" + input_nationality + "')";
 		String query = "INSERT INTO Captain(fullname, nationality) VALUES ('" + input_fullname + "', '" + input_nationality + "')";
 
@@ -365,10 +370,13 @@ public class DBproject{
                 //String input_cnum = in.readLine();
                 System.out.print("\t Enter the cost of this Cruise: $");
                 String input_cost = in.readLine();
+		 if(Integer.parseInt(input_cost) <= 0){throw new Exception("\tNegative values and zero not accepted.");}
                 System.out.print("\t Enter the number of tickets initially sold: ");
                 String input_num_sold = in.readLine();
+		 if(Integer.parseInt(input_num_sold) < 0){throw new Exception("\tNegative values not accepted.");}
                 System.out.print("\t Enter the number of stops: ");
                 String input_num_stops = in.readLine();
+		 if(Integer.parseInt(input_num_stops) < 0){throw new Exception("\tNegative values not accepted.");}
                 System.out.print("\t Enter the actual departure date (YYYY-MM-DD HR:MIN): ");
                 String input_actual_departure_date = in.readLine();
                 System.out.print("\t Enter the actual_arrival_date (YYYY-MM-DD HR:MIN): ");
@@ -415,10 +423,11 @@ public class DBproject{
 		esql.executeUpdate(query);
                 System.out.println("Added Customer");
 	
-		System.out.print("\t Enter today’s date:");
+		System.out.print("\t Enter today’s date (YYYY/MM/DD):");
                 String today_date = in.readLine();
 		System.out.print("\t Enter the cruise you want(currently cnum):");
                 String input_cnum = in.readLine();
+		
 
 		query = " SELECT C.num_sold, S.seats, C.actual_departure_date FROM Cruise C, CruiseInfo CI, Ship S WHERE C.cnum = " + input_cnum + " AND CI.cruise_id = C.cnum  AND S.id = CI.ship_id";
 		List<List<String>> rs = esql.executeQueryAndReturnResult(query);
@@ -508,7 +517,18 @@ public class DBproject{
 		System.out.print("\t Enter Cruise Number: ");
                 String input_cnum = in.readLine();
 		System.out.print("\t Enter Status You Would Like to Search For (W/C/R): ");
-		String input_status = in.readLine();
+		String input_status;
+		//do{
+		//input_status = in.readLine();
+		//System.out.print("\t Status incorrectly entered, valid entries are 'W','C', or 'R'. Re-input:");
+		//}
+		//while(!(input_status == "W" || input_status == "C" || input_status == "R"));i
+		input_status = in.readLine();
+		if(input_status.equals("W") || input_status.equals("C") || input_status.equals("R")){}else{
+			throw new Exception("\t Bad input, accepted input is W, C, or R");
+		}		
+
+
 		String query = "SELECT COUNT(Cu.id) FROM Cruise C, Customer Cu, Reservation R WHERE C.cnum = R.cid AND R.ccid = Cu.id AND R.status = '" + input_status + "' AND C.cnum =" + input_cnum;
 		esql.executeQueryAndPrintResult(query);			
 		}//end try
