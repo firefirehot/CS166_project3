@@ -252,6 +252,7 @@ public class DBproject{
 				System.out.println("6. List total number of repairs per Ship in descending order");
 				System.out.println("7. Find total number of passengers with a given status");
 				System.out.println("8. < EXIT");
+				System.out.println("9. Print Update");
 				
 				switch (readChoice()){
 					case 1: AddShip(esql); break;
@@ -262,6 +263,7 @@ public class DBproject{
 					case 6: ListsTotalNumberOfRepairsPerShip(esql); break;
 					case 7: FindPassengersCountWithStatus(esql); break;
 					case 8: keepon = false; break;
+					case 9: print_update(esql); break;
 				}
 			}
 		}catch(Exception e){
@@ -278,6 +280,26 @@ public class DBproject{
 			}
 		}
 	}
+	
+	public static void print_update(DBproject esql){
+	try{
+		System.out.print("\t Enter table:");
+                String table = in.readLine();
+                System.out.print("\t Enter the name of the value that you wish to read around:");
+                String valuename = in.readLine();
+                System.out.print("\t Enter the low value(not inclusive)");
+                String low = in.readLine();
+                System.out.print("\t Enter the high value(not inclusive)");
+                String high = in.readLine();
+
+		String query = "SELECT * FROM " + table+ " t WHERE t." + valuename + " > " + low + " AND t." + valuename + " < " + high;
+		esql.executeQueryAndPrintResult(query);
+		}
+	catch(Exception e){
+		System.err.println(e.getMessage());
+		}
+	}
+
 
 	public static int readChoice() {
 		int input;
@@ -297,8 +319,8 @@ public class DBproject{
 
 	public static void AddShip(DBproject esql) {//1
 	try{
-		System.out.print("\tEnter Ship ID: ");
-		String input_ID = in.readLine();
+		//System.out.print("\tEnter Ship ID: ");
+		//String input_ID = in.readLine();
 		System.out.print("\tEnter Make: ");
 		String input_make = in.readLine();
 		System.out.print("\tEnter Model: ");
@@ -307,8 +329,8 @@ public class DBproject{
 		String input_age = in.readLine();
 		System.out.print("\tEnter Number of Seats on the Ship: ");
 		String input_seats = in.readLine();
-		String query = "INSERT INTO Ship (id, make, model, age, seats) VALUES (" + input_ID + ", '" + input_make + "', '" + input_model + "', " + input_age + ", " + input_seats + ")";
-		
+		//String query = "INSERT INTO Ship (id, make, model, age, seats) VALUES (" + input_ID + ", '" + input_make + "', '" + input_model + "', " + input_age + ", " + input_seats + ")";
+		String query = "INSERT INTO Ship (make, model, age, seats) VALUES ('" + input_make + "', '" + input_model + "', " + input_age + ", " + input_seats + ")";
 		esql.executeUpdate(query);
 		System.out.println("Added Ship");
 		}
@@ -320,13 +342,14 @@ public class DBproject{
 
 	public static void AddCaptain(DBproject esql) {//2
 	try{
-                System.out.print("\tEnter Captain ID: ");
-                String input_ID = in.readLine();
+                //System.out.print("\tEnter Captain ID: ");
+                //String input_ID = in.readLine();
                 System.out.print("\tEnter the Full Name of the Captain: ");
                 String input_fullname = in.readLine();
                 System.out.print("\tEnter the Nationality of the Captain: ");
                 String input_nationality = in.readLine();
-                String query = "INSERT INTO Captain(id, fullname, nationality) VALUES (" + input_ID + ", '" + input_fullname + "', '" + input_nationality + "')";
+                //String query = "INSERT INTO Captain(id, fullname, nationality) VALUES (" + input_ID + ", '" + input_fullname + "', '" + input_nationality + "')";
+		String query = "INSERT INTO Captain(fullname, nationality) VALUES ('" + input_fullname + "', '" + input_nationality + "')";
 
                 esql.executeUpdate(query);
                 System.out.println("Added Captain");
@@ -338,8 +361,8 @@ public class DBproject{
 
 	public static void AddCruise(DBproject esql) {//3
 	try{
-                System.out.print("\t Enter Cruise number: ");
-                String input_cnum = in.readLine();
+                //System.out.print("\t Enter Cruise number: ");
+                //String input_cnum = in.readLine();
                 System.out.print("\t Enter the cost of this Cruise: $");
                 String input_cost = in.readLine();
                 System.out.print("\t Enter the number of tickets initially sold: ");
@@ -355,7 +378,8 @@ public class DBproject{
                 System.out.print("\t Enter the departure_port: ");
                 String input_departure_port = in.readLine();
 
-                String query = "INSERT INTO Cruise(cnum, cost, num_sold, num_stops, actual_departure_date, actual_arrival_date, arrival_port, departure_port) VALUES (" + input_cnum + ", " + input_cost + ", " + input_num_sold + ", " + input_num_stops + ", '" + input_actual_departure_date + "', '" + input_actual_arrival_date + "', '" + input_arrival_port + "', '" + input_departure_port +  "')";
+                //String query = "INSERT INTO Cruise(cnum, cost, num_sold, num_stops, actual_departure_date, actual_arrival_date, arrival_port, departure_port) VALUES (" + input_cnum + ", " + input_cost + ", " + input_num_sold + ", " + input_num_stops + ", '" + input_actual_departure_date + "', '" + input_actual_arrival_date + "', '" + input_arrival_port + "', '" + input_departure_port +  "')";
+		String query = "INSERT INTO Cruise( cost, num_sold, num_stops, actual_departure_date, actual_arrival_date, arrival_port, departure_port) VALUES (" + input_cost + ", " + input_num_sold + ", " + input_num_stops + ", '" + input_actual_departure_date + "', '" + input_actual_arrival_date + "', '" + input_arrival_port + "', '" + input_departure_port +  "')";
 		//NOTE: actual_departure_date may or may not need single quotes.
                 esql.executeUpdate(query);
                 System.out.println("Added Cruise");
@@ -387,7 +411,8 @@ public class DBproject{
                 String input_zipcode = in.readLine();
 		
 		String query = "INSERT INTO Customer(id,fname,lname,gtype,dob,address,phone,zipcode) VALUES(" + input_id + ", '" + input_fname + "', '" + input_lname + "', '" + input_gtype + "','" + input_dob + "','" + input_address + "', '" + input_phone + "', '" + input_zipcode + "')";
-                esql.executeUpdate(query);
+                //String query = "INSERT INTO Customer(fname,lname,gtype,dob,address,phone,zipcode) VALUES('" + input_fname + "', '" + input_lname + "', '" + input_gtype + "','" + input_dob + "','" + input_address + "', '" + input_phone + "', '" + input_zipcode + "')";
+		esql.executeUpdate(query);
                 System.out.println("Added Customer");
 	
 		System.out.print("\t Enter today’s date:");
@@ -414,9 +439,9 @@ public class DBproject{
 		System.out.println("Today's Date: " + today_month + "/" + today_day + "/" + today_year);
 		System.out.println("Query Date: " + query_month + "/" + query_day + "/" + query_year);
 
-		System.out.print("\t Enter Reservation Number: ");
-		String input_rnum = in.readLine();
-		query = "INSERT INTO Reservation(rnum,ccid,cid,status) VALUES(" + input_rnum + ", " + input_id + ", " + input_cnum + ", ";
+		//System.out.print("\t Enter Reservation Number: ");
+		//String input_rnum = in.readLine();
+		query = "INSERT INTO Reservation(ccid,cid,status) VALUES(" + input_id + ", " + input_cnum + ", ";
 
 		if(today_year > query_year || (today_year == query_year && today_month > query_month) || (today_year == query_year && today_month == query_month && today_day >= query_day)){
 			//today’s date is after the cruise has departed
